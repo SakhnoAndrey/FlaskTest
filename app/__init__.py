@@ -11,3 +11,5 @@ from app import routes, models
 # config for flask-admin
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 admin = Admin(app, name='microblog', template_mode='bootstrap3')
+
+#from admin import views
