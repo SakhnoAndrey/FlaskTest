@@ -10,6 +10,7 @@ from .models import User
 @flask_app.route('/index')
 #@login_required
 def index():
+    '''
     user = {'username': 'Miguel'}
     posts = [
         {
@@ -21,7 +22,9 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    '''
+    # Непонятно откуда взять posts принадлежащее конкретному пользователю
+    return render_template('index.html', title='Home', posts=posts)
 
 
 @flask_app.route('/login', methods=['GET', 'POST'])
