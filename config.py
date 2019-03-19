@@ -7,5 +7,6 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
     #    'sqlite:///' + os.path.join(basedir, 'app.db')
-    SQLALCHEMY_DATABASE_URI = 'postgresql://lw:flask@localhost/flask_test'
+    #SQLALCHEMY_DATABASE_URI = 'postgresql://lw:flask@localhost/flask_test'
+    SQLALCHEMY_DATABASE_URI = 'postgres://yukfxrte:PkM5ABnQl--7xGWsjH8_yPcwAuxg6tVz@balarama.db.elephantsql.com:5432/yukfxrte'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
