@@ -24,7 +24,7 @@ def index():
     ]
 
     # Непонятно откуда взять posts принадлежащее конкретному пользователю
-    return render_template('index.html', title='Home', posts=posts)
+    return render_template('index.html', title='Home', posts=posts, user=user)
 
 
 @flask_app.route('/login', methods=['GET', 'POST'])
