@@ -8,7 +8,7 @@ from .models import User
 
 @flask_app.route('/')
 @flask_app.route('/index')
-#@login_required
+@login_required
 def index():
 
     #user = {'username': 'Miguel'}
