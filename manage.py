@@ -9,4 +9,4 @@ def make_shell_context():
 
 
 if __name__ == '__main__':
-    flask_app.run()
+    flask_app.run('127.0.0.1', '5000', debug=False)
