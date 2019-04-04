@@ -7,6 +7,7 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 
 if not flask_app.debug:
+
     if flask_app.config['MAIL_SERVER']:
         auth = None
         if flask_app.config['MAIL_USERNAME'] or flask_app.config['MAIL_PASSWORD']:
@@ -24,7 +25,6 @@ if not flask_app.debug:
         mail_handler.setLevel(logging.ERROR)
         flask_app.logger.addHandler(mail_handler)
 
-if not flask_app.debug:
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/bikestore.log', maxBytes=10240, backupCount=10)
