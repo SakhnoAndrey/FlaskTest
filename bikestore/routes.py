@@ -3,27 +3,23 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
 from .application import flask_app, db
-from .forms import LoginForm, RegistrationForm, EditProfileForm
-from .models import User
+from .forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from .models import User, Post
 
 
 @flask_app.route('/')
 @flask_app.route('/index')
 @login_required
 def index():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
 
-    #user = {'username': 'Miguel'}
-
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
+    posts = current_user.followed_posts().all()
     # Непонятно откуда взять posts принадлежащее конкретному пользователю
     return render_template('index.html', title='Home Page', posts=posts)
 
@@ -124,3 +120,9 @@ def unfollow(username):
     db.session.commit()
     flash('You are not following {}!'.format(username))
     return redirect(url_for('user', username=username))
+
+@flask_app.route('/explore')
+@login_required
+def explore():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', title='Explore', posts=posts)
