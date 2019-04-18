@@ -3,8 +3,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
 from .application import flask_app, db
-from .forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from .forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm
 from .models import User, Post
+from .email import send_password_reset_email
 
 
 @flask_app.route('/', methods=['GET', 'POST'])
@@ -155,3 +156,16 @@ def explore():
         if posts.has_prev else None
     return render_template('index.html', title='Explore', posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
+
+@flask_app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', title='Reset Password', form=form)
