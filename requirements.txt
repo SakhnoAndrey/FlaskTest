@@ -6,6 +6,7 @@ flask-admin
 flask-mail
 flask-login
 flask-bootstrap
+flask-moment
 psycopg2-binary
 werkzeug
 python-dotenv
